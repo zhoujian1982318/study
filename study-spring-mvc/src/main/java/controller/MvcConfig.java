@@ -15,9 +15,16 @@
  */
 package controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
  * @author Rob Winch
@@ -25,5 +32,21 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableWebMvc
 @ComponentScan
-public class MvcConfig {
+public class MvcConfig extends WebMvcConfigurationSupport {
+	private static Logger logger  = LoggerFactory.getLogger(MvcConfig.class);
+	
+	@Bean  
+    public ViewResolver viewResolver() {  
+        logger.debug(" configure viewResolver bean");  
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();  
+        viewResolver.setPrefix("/WEB-INF/jsp/");  
+        viewResolver.setSuffix(".jsp");  
+        return viewResolver;  
+    }
+	
+	  @Override  
+	  protected void addResourceHandlers(ResourceHandlerRegistry registry) {  
+	      logger.debug("configure resource handlers");  
+	      registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/images/");  
+	 }
 }
