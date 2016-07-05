@@ -21,7 +21,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -30,7 +29,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  * @author Rob Winch
  */
 @Configuration
-@EnableWebMvc
+//Adding this annotation to an @Configuration class imports the Spring MVC configuration from WebMvcConfigurationSupport, e.g.: 
+//To customize the imported configuration, implement the interface WebMvcConfigurer or more likely extend the empty method base class WebMvcConfigurerAdapter and override individual methods
+//If WebMvcConfigurer does not expose some advanced setting that needs to be configured, consider removing the @EnableWebMvc annotation and extending directly from WebMvcConfigurationSupport or DelegatingWebMvcConfiguration
+//@EnableWebMvc  //removing the @EnableWebMvc annotation, extend directly from WebMvcConfigurationSupport
 @ComponentScan
 public class MvcConfig extends WebMvcConfigurationSupport {
 	private static Logger logger  = LoggerFactory.getLogger(MvcConfig.class);
@@ -44,9 +46,9 @@ public class MvcConfig extends WebMvcConfigurationSupport {
         return viewResolver;  
     }
 	
-	  @Override  
-	  protected void addResourceHandlers(ResourceHandlerRegistry registry) {  
-	      logger.debug("configure resource handlers");  
-	      registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/images/");  
-	 }
+	@Override  
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {  
+	    logger.debug("configure resource handlers");  
+	    registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/images/");  
+	}
 }

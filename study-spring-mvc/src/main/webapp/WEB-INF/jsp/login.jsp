@@ -1,12 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>短信web系统</title>
-    <link href="css/style.css" rel="stylesheet" type="text/css">
+<title>welcome</title>
 <style>
-#bg{background:url(images/login_1.jpg) top; width:491px;height:365px}
+#bg{top; width:491px;height:365px}
 .lo_input{ background-color:#1D2846; border:1px solid #fff; width:140px; height:23px; color:#fff;}
 </style>
-<script type="text/javascript" src="./pages/include/js/public.js"></script>
 <SCRIPT language=JavaScript>
 function checkform(){
 	var operId = document.loginForm.operId.value;
@@ -64,15 +63,15 @@ function init(){
         <td valign="top"><table border="0" cellpadding="5" cellspacing="0" style="margin:75px 0 0 81px">
           <tr>
             <td>&nbsp;</td>
-            <td colspan="2" class="font_w14" >欢迎使用湖州公积金住房网短信WEB系统</td>
+            <td colspan="2" class="font_w14" >welcome</td>
           </tr>
           <tr>
-            <td class="font_write12">用户名：</td>
+            <td class="font_write12">用户名:</td>
             <td><input name="username" type="text" maxlength="8" value="99999999" class="lo_input"></td>
              <td rowspan="2"><input type="image" src="images/btn_login.jpg" width="77" height="60" border="0"></td>
           </tr>
           <tr>
-            <td class="font_write12">密　码：</td>
+            <td class="font_write12">密码:</td>
             <td><input name="password" type="password" maxlength="8" value="99999999" class="lo_input"></td>
           </tr>
         </table>
