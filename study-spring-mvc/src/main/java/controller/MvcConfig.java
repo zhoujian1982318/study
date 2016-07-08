@@ -15,15 +15,24 @@
  */
 package controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 /**
  * @author Rob Winch
@@ -40,10 +49,29 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 	@Bean  
     public ViewResolver viewResolver() {  
         logger.debug(" configure viewResolver bean");  
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();  
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver(); 
+        viewResolver.setOrder(2);
         viewResolver.setPrefix("/WEB-INF/jsp/");  
         viewResolver.setSuffix(".jsp");  
         return viewResolver;  
+    }
+	
+	@Bean  
+    public ViewResolver cNviewResolver() {  
+        //logger.debug(" configure viewResolver bean");  
+		ContentNegotiatingViewResolver cNviewResolver = new ContentNegotiatingViewResolver(); 
+		cNviewResolver.setOrder(1);
+		cNviewResolver.setFavorParameter(false);
+		cNviewResolver.setFavorPathExtension(true);
+		cNviewResolver.setDefaultContentType(MediaType.TEXT_HTML);
+		Map<String,String> mediaTypes = new HashMap<String,String>();
+		mediaTypes.put("json", "application/json");
+		mediaTypes.put("xml", "application/xml");
+		cNviewResolver.setMediaTypes(mediaTypes);
+		List<View> defaultViews = new ArrayList<View> ();
+		defaultViews.add(new MappingJackson2JsonView());
+		cNviewResolver.setDefaultViews(defaultViews);
+        return cNviewResolver;  
     }
 	
 	@Override  
