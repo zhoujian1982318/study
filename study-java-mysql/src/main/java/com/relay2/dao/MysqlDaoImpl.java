@@ -317,4 +317,25 @@ public class MysqlDaoImpl {
 	public void testSqlModeStrictAllTables(){
 		
 	}
+	
+	
+	public void testFabricInsert(){
+		for(int i =0; i<100; i++){
+			String sql =  "INSERT INTO city(Name,CountryCode,District) values ('Lushan"+i+"','CHN','Jiangxi')";
+			jdbcT.update(sql);
+		}
+	}
+	
+	public String testFabricQuery(){
+		String sql =  "SELECT @@server_uuid";
+			
+		String uuid = 	jdbcT.queryForObject(sql, String.class);
+		
+		sql  = "SELECT Name FROM city where ID=4091";
+		
+		String name = jdbcT.queryForObject(sql, String.class);
+		System.out.println("uuid="+uuid);
+		System.out.println("name="+name);
+		return uuid;
+	}
 }

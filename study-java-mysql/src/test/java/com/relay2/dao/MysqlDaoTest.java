@@ -174,9 +174,6 @@ public class MysqlDaoTest {
 	}
 	
 	
-	
-	
-	
 	public void tearDown(){
 		ac.close();
 	}
