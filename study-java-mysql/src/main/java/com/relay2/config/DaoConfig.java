@@ -9,122 +9,65 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.mysql.fabric.jdbc.FabricMySQLDataSource;
+import com.relay2.dao.MysqlDaoImpl;
+import com.relay2.dao.MysqlFabricDaoImpl;
+import com.relay2.dao.MysqlReplicationDaoImpl;
 
 @Configuration
-@EnableTransactionManagement 
+@EnableTransactionManagement
+@ComponentScan(basePackages="com.relay2.dao",useDefaultFilters=false,
+	includeFilters={@Filter(type=FilterType.ASSIGNABLE_TYPE,value= {MysqlReplicationDaoImpl.class, MysqlDaoImpl.class, MysqlFabricDaoImpl.class})})
 public class DaoConfig {
-	private static Logger logger = LoggerFactory.getLogger(DaoConfig.class);
 	
-	//@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-	//@Bean(destroyMethod = "close")
+	//private static Logger logger = LoggerFactory.getLogger(DaoConfig.class);
+	
+	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+	@Bean(destroyMethod = "close")
 	public DataSource dataSource() {
-		// DriverManagerDataSource driverMgmtDs = new DriverManagerDataSource();
-		// driverMgmtDs.setDriverClassName("com.mysql.jdbc.Driver");
-		// driverMgmtDs.setUrl("jdbc:mysql://10.10.20.170:3306/r2db?useDynamicCharsetInfo=false&useUnicode=true&characterEncoding=UTF-8");
-		// driverMgmtDs.setUsername("root");
-		// driverMgmtDs.setPassword("mysql");
-		// return driverMgmtDs;
-		InitDataSource dbcp = new InitDataSource();
+		
 //		ComboPooledDataSource c3pool = new ComboPooledDataSource();
-		// try {
-//		try {
-//			c3pool.setDriverClass("com.mysql.jdbc.Driver");
-//
-//			c3pool.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/r2db?useDynamicCharsetInfo=false&useUnicode=true&characterEncoding=UTF-8");
-//			c3pool.setUser("root");
-//			c3pool.setPassword("mysql");
-//			c3pool.setAcquireIncrement(3);
-//			c3pool.setInitialPoolSize(3);
-//			c3pool.setMinPoolSize(3);
-//			c3pool.setMaxPoolSize(10);
-//			c3pool.setMaxIdleTime(60);
-	
-			 dbcp.setDriverClassName("com.mysql.jdbc.Driver");
-			 dbcp.setUrl("jdbc:mysql://10.10.20.170:3306/r2db?useDynamicCharsetInfo=false&useUnicode=true&characterEncoding=UTF-8");
-			 dbcp.setUsername("root");
-			 dbcp.setPassword("mysql");
-			 dbcp.setInitialSize(5);
-			 
-			 dbcp.setMaxIdle(10);
-			 dbcp.setMinIdle(5);
-			 dbcp.setMaxTotal(5);
-			try {
-				dbcp.init();
-			} catch (SQLException e) {
-				logger.debug("init connection faield...");
-			}
-//			try {
-//				c3pool.getConnection();
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-			
-//		} catch (PropertyVetoException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		return dbcp;
+//		c3pool.setDriverClass("com.mysql.jdbc.Driver");
+//		c3pool.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/r2db?useDynamicCharsetInfo=false&useUnicode=true&characterEncoding=UTF-8");
+//		c3pool.setUser("root");
+//		c3pool.setPassword("mysql");
+//		c3pool.setAcquireIncrement(3);
+//		c3pool.setInitialPoolSize(3);
+//		c3pool.setMinPoolSize(3);
+//		c3pool.setMaxPoolSize(10);
+//		c3pool.setMaxIdleTime(60);
+		 InitDataSource dbcp = new InitDataSource();
+		 dbcp.setDriverClassName("com.mysql.jdbc.Driver");
+		 dbcp.setUrl("jdbc:mysql://10.10.20.170:3306/r2db?useDynamicCharsetInfo=false&useUnicode=true&characterEncoding=UTF-8");
+		 dbcp.setUsername("root");
+		 dbcp.setPassword("mysql");
+		 dbcp.setInitialSize(5);
+		 
+		 dbcp.setMaxIdle(10);
+		 dbcp.setMinIdle(5);
+		 dbcp.setMaxTotal(5);
+//       if dbcp don't  init.  dchp don't connect to mysql host
+//		 try {
+//			dbcp.init();
+//		 } catch (SQLException e) {
+//			logger.error("init connection faield...");
+//		 }
+		 return dbcp;
 	}
 	
 	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-	//@Bean
+	@Bean
 	public DataSource fabricDataSource() {
-		// DriverManagerDataSource driverMgmtDs = new DriverManagerDataSource();
-		// driverMgmtDs.setDriverClassName("com.mysql.jdbc.Driver");
-		// driverMgmtDs.setUrl("jdbc:mysql://10.10.20.170:3306/r2db?useDynamicCharsetInfo=false&useUnicode=true&characterEncoding=UTF-8");
-		// driverMgmtDs.setUsername("root");
-		// driverMgmtDs.setPassword("mysql");
-		// return driverMgmtDs;
-//		InitDataSource dbcp = new InitDataSource();
-//		ComboPooledDataSource c3pool = new ComboPooledDataSource();
-		// try {
-//		try {
-//			c3pool.setDriverClass("com.mysql.jdbc.Driver");
-//
-//			c3pool.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/r2db?useDynamicCharsetInfo=false&useUnicode=true&characterEncoding=UTF-8");
-//			c3pool.setUser("root");
-//			c3pool.setPassword("mysql");
-//			c3pool.setAcquireIncrement(3);
-//			c3pool.setInitialPoolSize(3);
-//			c3pool.setMinPoolSize(3);
-//			c3pool.setMaxPoolSize(10);
-//			c3pool.setMaxIdleTime(60);
-			
-//			 dbcp.setDriverClassName("com.mysql.fabric.jdbc.FabricMySQLDriver");
-//			 dbcp.setUrl("jdbc:mysql:fabric://10.22.1.8:32274/world_x?fabricServerGroup=my_group");
-//			 dbcp.setUsername("admin");
-//			 dbcp.setPassword("admin");
-//			 dbcp.setInitialSize(5);
-//			 
-//			 dbcp.setMaxIdle(10);
-//			 dbcp.setMinIdle(5);
-//			 dbcp.setMaxTotal(5);
-//			try {
-//				dbcp.init();
-//			} catch (SQLException e) {
-//				logger.debug("init connection faield...");
-//			}
-//			try {
-//				c3pool.getConnection();
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-			
-//		} catch (PropertyVetoException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		FabricMySQLDataSource ds = new FabricMySQLDataSource();
         ds.setServerName("10.22.1.8");
         ds.setPort(32274);
@@ -148,7 +91,7 @@ public class DaoConfig {
 		return ds;
 	}
 	
-//	@Bean
+	@Bean
 	public JdbcTemplate jdbcTemplate() {
 		DataSource ds = dataSource();
 		return new JdbcTemplate(ds);
@@ -162,19 +105,17 @@ public class DaoConfig {
 	
 	
 	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-	//@Bean
+	@Bean
 	public DataSource replicationDataSource() {
-		// DriverManagerDataSource driverMgmtDs = new DriverManagerDataSource();
-		// driverMgmtDs.setDriverClassName("com.mysql.jdbc.Driver");
-		// driverMgmtDs.setUrl("jdbc:mysql://10.10.20.170:3306/r2db?useDynamicCharsetInfo=false&useUnicode=true&characterEncoding=UTF-8");
-		// driverMgmtDs.setUsername("root");
-		// driverMgmtDs.setPassword("mysql");
-		// return driverMgmtDs;
 		BasicDataSource dbcp = new BasicDataSource();
-		dbcp.setDriverClassName("com.mysql.jdbc.ReplicationDriver");
-		//dbcp.setUrl("jdbc:mysql:replication://10.22.1.7:24801,10.22.1.7:24802,10.22.1.7:24803/test");
-		dbcp.setUrl("jdbc:mysql:replication://10.22.1.7:24801,10.22.1.7:24802,10.22.1.7:24803/test");
-		dbcp.setConnectionProperties("roundRobinLoadBalance=true");
+		dbcp.setDriverClassName("com.mysql.jdbc.Driver");
+		//dbcp.setUrl("jdbc:mysql:replication://10.22.1.26:3306,192.168.20.143:3306/r2db");
+		 dbcp.setUrl("jdbc:mysql:replication://10.22.1.26:3306,192.168.20.143:3306/r2db");
+		//dbcp.setConnectionProperties("roundRobinLoadBalance=true");
+		dbcp.addConnectionProperty("retriesAllDown", "5");
+		//表示当所有的slaves都失效（异常）时，是否允许将read请求转发给master, 默认是false， readFromMasterWhenNoSlaves 这个属性似乎不起作用
+		dbcp.addConnectionProperty("readFromMasterWhenNoSlaves","true");
+		dbcp.addConnectionProperty("allowSlavesDownConnections", "true");
 		dbcp.setUsername("root");
 		dbcp.setPassword("mysql");
 		dbcp.setInitialSize(3);
@@ -183,25 +124,24 @@ public class DaoConfig {
 		dbcp.setMinIdle(5);
 		dbcp.setMaxTotal(5);
 		return dbcp;
+		
+		//readFromMasterWhenNoSlaves 好像没有效果
+		//注意 jdbc:mysql:loadbalance写成 replication 的时候，  driver class name 不要写成 ReplicationDriver, 否则无效.
+		//jdbc:mysql:loadbalance 表示用于多主的 结构。 根据策略挑选 host
 //		DriverManagerDataSource driverMgmtDs = new DriverManagerDataSource();
-//		driverMgmtDs.setDriverClassName("com.mysql.jdbc.ReplicationDriver");
-//		driverMgmtDs.setUrl("jdbc:mysql:replication://10.22.1.7:24801,10.22.1.7:24802,10.22.1.7:24803/test");
+//		driverMgmtDs.setDriverClassName("com.mysql.jdbc.Driver");
+//		//jdbc:mysql:replication, 如果这样写 queriesBeforeRetryMaster=10
+//		driverMgmtDs.setUrl("jdbc:mysql:loadbalance://10.22.1.26:3306,192.168.20.143:3306/r2db?retriesAllDown=5");
 //		driverMgmtDs.setUsername("root");
 //		driverMgmtDs.setPassword("mysql");
 //		return driverMgmtDs;
-		
+//		
 	}
 	
 	
 	@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 	@Bean
 	public DataSource readOnlyDataSource() {
-		// DriverManagerDataSource driverMgmtDs = new DriverManagerDataSource();
-		// driverMgmtDs.setDriverClassName("com.mysql.jdbc.Driver");
-		// driverMgmtDs.setUrl("jdbc:mysql://10.10.20.170:3306/r2db?useDynamicCharsetInfo=false&useUnicode=true&characterEncoding=UTF-8");
-		// driverMgmtDs.setUsername("root");
-		// driverMgmtDs.setPassword("mysql");
-		// return driverMgmtDs;
 		 BasicDataSource dbcp = new BasicDataSource();
 		 dbcp.setDriverClassName("com.mysql.jdbc.Driver");
 		 dbcp.setUrl("jdbc:mysql://192.168.20.139:6447/test?useDynamicCharsetInfo=false&useUnicode=true&characterEncoding=UTF-8");
@@ -227,7 +167,8 @@ public class DaoConfig {
 		}
 	}
 	
-	//@Bean
+	
+	@Bean
 	public JdbcTemplate replicationJdbcT(){
 		try{
 			DataSource ds = replicationDataSource();
