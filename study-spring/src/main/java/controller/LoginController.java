@@ -1,5 +1,6 @@
 package controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import beans.AutoBean;
 import listener.UserOnlineListener;
 
 @Controller
@@ -21,12 +23,17 @@ public class LoginController {
 	
 	
 	@Autowired
-	ApplicationContext applicationContext;
+	private ApplicationContext applicationContext;
+	
+	@Resource(name="autoBean")
+	private AutoBean autoBean;
 	
 	@RequestMapping(value="/login")
     public String login(@RequestParam(value="username", defaultValue ="default") String username,
     								  @RequestParam(value="password",defaultValue = "no auth") String password,
     								   HttpServletRequest rawReq) {
+		logger.info("autoBean age is {}, the birthDay is {}", autoBean.age, autoBean.birthDay);
+		
 		HttpSession session = rawReq.getSession(false);
 		logger.info("application is {}", applicationContext);
 		if(session!=null && session.getAttribute("user_pass")!= null){

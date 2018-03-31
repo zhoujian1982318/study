@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>study-spring</groupId>
-	<artifactId>study-spring-mvc</artifactId>
+	<artifactId>study-spring-base</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<name>study spring mvc4</name>
-	<description>study spring mvc4</description>
+	<name>study spring 4</name>
+	<description>study spring 4</description>
 	<properties>
 		<slf4j.version>1.6.4</slf4j.version>
 		<junit.version>4.10</junit.version>
@@ -51,12 +51,6 @@
 			<version>4.1.6.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>4.1.6.RELEASE</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.4.5</version>
@@ -86,11 +80,6 @@
 			<groupId>org.jxls</groupId>
 			<artifactId>jxls</artifactId>
 			<version>2.3.0</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
 		</dependency>
 		<!-- <dependency> <groupId>com.itextpdf</groupId> <artifactId>itextpdf</artifactId> 
 			<version>5.5.9</version> </dependency> -->

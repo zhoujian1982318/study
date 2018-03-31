@@ -20,15 +20,14 @@ public class GreetingController {
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
 
-    //produces= {MediaType.ALL_VALUE}
-    @RequestMapping(value="/greeting" , produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/greeting", produces= {MediaType.ALL_VALUE} )//, produces=MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody  Greeting greeting(@RequestParam(value="name", defaultValue="World") String name, HttpServletRequest rawReq) {
         return new Greeting(counter.incrementAndGet(),
                             String.format(template, name));
     }
     
     @RequestMapping(value="/user")
-    public  String user(ModelMap model) {
+    public  String greeting(ModelMap model) {
     	Greeting gr = new Greeting(counter.incrementAndGet(),"test");
     	List<String> list = new ArrayList<String>();
     	list.add("first");
