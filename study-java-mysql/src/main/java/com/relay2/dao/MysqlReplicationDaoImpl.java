@@ -25,13 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("mysqlReplicationDao")
 public class MysqlReplicationDaoImpl {
-	private static Logger logger = LoggerFactory.getLogger(MysqlDaoImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(MysqlReplicationDaoImpl.class);
 	
-//	@Resource(name="replicationJdbcT")
-//	private JdbcTemplate jdbcT ;
+	@Resource(name="replicationJdbcT")
+	private JdbcTemplate jdbcT ;
 	
-	@Resource(name="readonlyJdbcT")
-	private JdbcTemplate roJdbcT ;
+//	@Resource(name="readonlyJdbcT")
+//	private JdbcTemplate roJdbcT ;
 	
 	
 //	public String testQuery(boolean readonly) throws SQLException{
@@ -86,14 +86,23 @@ public class MysqlReplicationDaoImpl {
 //		return uuid;
 //	}
 	
-//	@Transactional(rollbackFor = Exception.class, readOnly=true)
+//	
+	/**
+	 * retriesAllDown 需要设置该属性，默认重试 120 次
+	 * jdbc:mysql:replication://[master-host]:[port],[slave-host]:[port],.../database?[property=<value>]  
+	 * 在replication模式下，默认slaves的负载均衡的策略与LoadBalance协议保持一致, 而且由Connection.getReadOnly()值决定；
+	 * 如果read_only为true，Replication Connection将使用“随机”模式选择一个slave链接, 如果所有的slaves都失效，此时将使用master链接（由readFromMasterNoSlaves参数控制）
+	 * @return
+	 * @throws SQLException
+	 */
+	@Transactional(rollbackFor = Exception.class, readOnly=true)
 	public String testQuery() throws SQLException{
 		String sql =  "SELECT @@server_uuid";
-		String uuid = roJdbcT.queryForObject(sql, String.class);
-		System.out.println("uuid="+uuid);
-		sql  = "SELECT c2 FROM t1 where c1=1";
-		String c2 = roJdbcT.queryForObject(sql, String.class);
-		System.out.println("c2="+c2);
+		String uuid = jdbcT.queryForObject(sql, String.class);
+		logger.info("mysql uuid is {} ", uuid );
+		sql  = "SELECT apMacAddr FROM AccessPoint where apMacAddr='B4:82:C5:00:05:38'";
+		String apMac = jdbcT.queryForObject(sql, String.class);
+		logger.info("the apMac  is {} ", apMac );
 		return uuid;
 	}
 	
