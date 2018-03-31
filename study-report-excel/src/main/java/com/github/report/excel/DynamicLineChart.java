@@ -23,7 +23,9 @@ import org.apache.poi.ss.usermodel.charts.LegendPosition;
 import org.apache.poi.ss.usermodel.charts.LineChartData;
 import org.apache.poi.ss.usermodel.charts.ValueAxis;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFName;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jxls.common.Context;
 import org.jxls.transform.poi.PoiTransformer;
@@ -54,13 +56,20 @@ public class DynamicLineChart {
 	                
 	                InputStream sourceBytes = new FileInputStream(output);
 	                XSSFWorkbook workbook = new XSSFWorkbook(sourceBytes);
+	               
 	                XSSFName name =workbook.getName("pieval");
 	                name.setSheetIndex(-1);
 	                name.setRefersToFormula("Template!A1:A1");
 	                
 	                Sheet sheet = workbook.getSheet("Template");
+//	                XSSFSheet test = workbook.getSheet("test");
+//	                XSSFDrawing parich = test.getDrawingPatriarch();
+	          
+	               // drawing.
 	                Drawing drawing = sheet.createDrawingPatriarch();
+	                //drawing.
 	                ClientAnchor anchor = drawing.createAnchor(0, 0, 0, 0, 0, 1, 10, 10);
+	                
 	                Chart chart = drawing.createChart(anchor);
 	                ChartLegend legend = chart.getOrCreateLegend();
 	                legend.setPosition(LegendPosition.TOP_RIGHT);
