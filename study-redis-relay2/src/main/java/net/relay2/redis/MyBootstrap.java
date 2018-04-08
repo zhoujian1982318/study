@@ -6,8 +6,6 @@ package net.relay2.redis;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.relay2.redis.TestInClass.Main;
-import net.relay2.redis.TestInClass.StaticMain;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
 
