@@ -9,7 +9,6 @@
 		<java-version>1.7</java-version>
 		<org.springframework-version>3.2.10.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.12</org.aspectj-version>
-		<jetty.version>8.1.0.RC5</jetty.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<junit.version>4.10</junit.version>
 		<rabbit.version>3.4.3</rabbit.version>
@@ -55,7 +54,11 @@
 			<artifactId>logback-access</artifactId>
 			<version>1.0.1</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
 		
 		<!-- Test -->
 		<dependency>
