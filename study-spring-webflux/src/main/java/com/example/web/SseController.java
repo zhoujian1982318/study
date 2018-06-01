@@ -10,6 +10,7 @@ import reactor.util.function.Tuples;
 
 import java.time.Duration;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 
 @RestController
@@ -18,8 +19,8 @@ public class SseController {
 
     @GetMapping("/randomNumbers")
     public Flux<ServerSentEvent<Integer>> randomNumbers() {
-        return Flux.interval(Duration.ofSeconds(1))
-                .map(seq -> Tuples.of(seq, ThreadLocalRandom.current().nextInt()))
+        return  Flux.interval(Duration.ofSeconds(1))
+                .map(seq->Tuples.of(seq, ThreadLocalRandom.current().nextInt()))
                 .map(data -> ServerSentEvent.<Integer>builder()
                         .event("random")
                         .id(Long.toString(data.getT1()))

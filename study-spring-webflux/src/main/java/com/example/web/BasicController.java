@@ -11,4 +11,9 @@ public class BasicController {
     public Mono<String> sayHelloWorld() {
         return Mono.just("Hello World");
     }
+
+    @GetMapping("/hello_test")
+    public String helloTest() {
+        return "hello_test";
+    }
 }
