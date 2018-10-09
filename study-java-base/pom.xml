@@ -1,20 +1,51 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>study-java</groupId>
-  <artifactId>study-java-base</artifactId>
-  <version>1.0</version>
-  <name>study java base</name>
-  <description>study java base</description>
-  <build>
-  		<plugins>  
-          <plugin>  
-              <groupId>org.apache.maven.plugins</groupId>  
-              <artifactId>maven-compiler-plugin</artifactId>
-              <configuration>  
-                  <source>1.8</source>
-                  <target>1.8</target>
-              </configuration>  
-          </plugin>  
-      </plugins>  
-  </build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>study-java</groupId>
+	<artifactId>study-java-base</artifactId>
+	<version>1.0</version>
+	<name>study java base</name>
+	<description>study java base</description>
+	<properties>
+		<slf4j.version>1.6.4</slf4j.version>
+	</properties>
+	<dependencies>
+		<!-- add slf4j interfaces to classpath -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- add commons logging to slf4j bridge to classpath -->
+		<!-- acts as jcl but routes commons-logging calls to slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

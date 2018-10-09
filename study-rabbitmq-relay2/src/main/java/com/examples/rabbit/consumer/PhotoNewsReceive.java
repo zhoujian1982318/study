@@ -30,7 +30,7 @@ public class PhotoNewsReceive {
 	    Connection connection = factory.newConnection();
 	    Channel channel = connection.createChannel();
 
-	    Exchange.DeclareOk declareOk = channel.exchangeDeclare(EXCHANGE_NEWS_NAME, "topic");
+	    Exchange.DeclareOk declareOk = channel.exchangeDeclare(EXCHANGE_NEWS_NAME, "topic", true);
 	    LOG.info("declare no-durable topic  exchange 'news' return is {}", declareOk);
 	    
 	    Queue.DeclareOk queDeclare =  channel.queueDeclare(QUEUE_NAME,

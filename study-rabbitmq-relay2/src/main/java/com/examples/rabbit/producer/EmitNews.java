@@ -32,14 +32,15 @@ public class EmitNews {
 		Connection connection = factory.newConnection();
 		Channel channel = connection.createChannel();
 		
-		Exchange.DeclareOk declareOk = channel.exchangeDeclare(EXCHANGE_NEWS_NAME, "topic");
-		LOG.info("declare no-durable topic  exchange 'news' return is {}", declareOk);
+		Exchange.DeclareOk declareOk = channel.exchangeDeclare(EXCHANGE_NEWS_NAME, "topic", true);
+		LOG.info("declare durable topic  exchange 'news' return is {}", declareOk);
 		
-		String[] msgPair = getMessage();
-
-        channel.basicPublish(EXCHANGE_NEWS_NAME, msgPair[0], MessageProperties.TEXT_PLAIN, msgPair[1].getBytes());
-        LOG.info("Send the message, the routing key is {},  message is {} " , msgPair[0] , msgPair[1] );
-        
+		for(int i=0; i<10; i++) {
+			String[] msgPair = getMessage();
+	
+	        channel.basicPublish(EXCHANGE_NEWS_NAME, msgPair[0], MessageProperties.TEXT_PLAIN, msgPair[1].getBytes());
+	        LOG.info("Send the message, the routing key is {},  message is {} " , msgPair[0] , msgPair[1] );
+		}
         channel.close();
         connection.close();
     }

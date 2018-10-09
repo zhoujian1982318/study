@@ -1,7 +1,6 @@
 package com.examples.rabbit.consumer.test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+
 
 import java.io.IOException;
 import java.util.Random;
